@@ -2,20 +2,21 @@
 
 <html>
 <head>
-    <title>
+
      <asp:ContentPlaceHolder ID="TitleContent" runat="server" />
-    </title><title>Neustar | Real Intelligence. Better Decisions.</title>
+     <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
+     <title>Neustar | Real Intelligence. Better Decisions.</title>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="Content-Language" content="en-US">    
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-    <link href="https://ns-cdn.neustar.biz/biz/neustar/base/css/_min/corporate_min.css"
-        media="screen" rel="stylesheet" type="text/css">
+    <link href="../../Content/Site.css" rel="Stylesheet" type="text/css">
+        
     <!--[if IE 9]> <link href="https://ns-cdn.neustar.biz/biz/neustar/base/css/corporate-ie9.css" media="screen" rel="stylesheet" type="text/css" ><![endif]-->
     <!--[if lt IE 9]> <link href="https://ns-cdn.neustar.biz/biz/neustar/base/css/corporate-ie8.css" media="screen" rel="stylesheet" type="text/css" ><![endif]-->
     <!--[if IE 7]> <link href="https://ns-cdn.neustar.biz/biz/neustar/base/css/corporate-ie7.css" media="screen" rel="stylesheet" type="text/css" ><![endif]-->
-    <link href="/corporate/css/styles.css" media="screen" rel="stylesheet" type="text/css">
-    <link href="/corporate/css/mobile.css" media="screen" rel="stylesheet" type="text/css">
+    <link href="../../Content/styles.css" media="screen" rel="stylesheet" type="text/css">
+    <link href="../../Content/mobile.css" media="screen" rel="stylesheet" type="text/css">
 </head>
 <body id="corporate_v2_layout" class="home">
     <header class="h">
@@ -55,5 +56,7 @@
         	
     </div>
 </aside>
+
+<asp:ContentPlaceHolder ID="CustomJs" runat="server" />
 </body>
 </html>
