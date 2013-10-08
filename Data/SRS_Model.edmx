@@ -4,13 +4,13 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="meetingModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="meetingModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="meetingModelStoreContainer">
-          <EntitySet Name="buildings" EntityType="meetingModel.Store.buildings" store:Type="Tables" Schema="meeting" />
-          <EntitySet Name="countries" EntityType="meetingModel.Store.countries" store:Type="Tables" Schema="meeting" />
-          <EntitySet Name="devices" EntityType="meetingModel.Store.devices" store:Type="Tables" Schema="meeting" />
-          <EntitySet Name="reservations" EntityType="meetingModel.Store.reservations" store:Type="Tables" Schema="meeting" />
-          <EntitySet Name="rooms" EntityType="meetingModel.Store.rooms" store:Type="Tables" Schema="meeting" />
+          <EntitySet Name="buildings" EntityType="meetingModel.Store.buildings" store:Type="Tables" Schema="mydb" />
+          <EntitySet Name="countries" EntityType="meetingModel.Store.countries" store:Type="Tables" Schema="mydb" />
+          <EntitySet Name="devices" EntityType="meetingModel.Store.devices" store:Type="Tables" Schema="mydb" />
+          <EntitySet Name="reservations" EntityType="meetingModel.Store.reservations" store:Type="Tables" Schema="mydb" />
+          <EntitySet Name="rooms" EntityType="meetingModel.Store.rooms" store:Type="Tables" Schema="mydb" />
           <AssociationSet Name="fk_building" Association="meetingModel.Store.fk_building">
             <End Role="buildings" EntitySet="buildings" />
             <End Role="rooms" EntitySet="rooms" />
@@ -23,7 +23,7 @@
             <End Role="rooms" EntitySet="rooms" />
             <End Role="devices" EntitySet="devices" />
           </AssociationSet>
-          <AssociationSet Name="fk_room_id" Association="meetingModel.Store.fk_room_id">
+          <AssociationSet Name="fk_rooms" Association="meetingModel.Store.fk_rooms">
             <End Role="rooms" EntitySet="rooms" />
             <End Role="reservations" EntitySet="reservations" />
           </AssociationSet>
@@ -125,7 +125,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_room_id">
+        <Association Name="fk_rooms">
           <End Role="rooms" Type="meetingModel.Store.rooms" Multiplicity="1" />
           <End Role="reservations" Type="meetingModel.Store.reservations" Multiplicity="*" />
           <ReferentialConstraint>
@@ -137,8 +137,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="meetingModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
@@ -149,191 +148,211 @@
           <EntitySet Name="reservations" EntityType="meetingModel.reservation" />
           <EntitySet Name="rooms" EntityType="meetingModel.room" />
           <AssociationSet Name="fk_building" Association="meetingModel.fk_building">
-            <End Role="buildings" EntitySet="buildings" />
-            <End Role="rooms" EntitySet="rooms" />
+            <End Role="building" EntitySet="buildings" />
+            <End Role="room" EntitySet="rooms" />
           </AssociationSet>
           <AssociationSet Name="fk_country" Association="meetingModel.fk_country">
-            <End Role="countries" EntitySet="countries" />
-            <End Role="buildings" EntitySet="buildings" />
+            <End Role="country" EntitySet="countries" />
+            <End Role="building" EntitySet="buildings" />
           </AssociationSet>
           <AssociationSet Name="fk_room" Association="meetingModel.fk_room">
-            <End Role="rooms" EntitySet="rooms" />
-            <End Role="devices" EntitySet="devices" />
+            <End Role="room" EntitySet="rooms" />
+            <End Role="device" EntitySet="devices" />
           </AssociationSet>
-          <AssociationSet Name="fk_room_id" Association="meetingModel.fk_room_id">
-            <End Role="rooms" EntitySet="rooms" />
-            <End Role="reservations" EntitySet="reservations" />
+          <AssociationSet Name="fk_rooms" Association="meetingModel.fk_rooms">
+            <End Role="room" EntitySet="rooms" />
+            <End Role="reservation" EntitySet="reservations" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="building">
           <Key>
             <PropertyRef Name="building_id" />
           </Key>
-          <Property Name="building_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="country_id" Type="Int32" Nullable="false" />
-          <Property Name="building_name" Type="String" />
-          <Property Name="bulding_address" Type="String" />
-          <Property Name="modified_by" Type="String" />
-          <Property Name="created_date" Type="DateTime" />
-          <Property Name="modified_date" Type="DateTime" />
-          <Property Name="is_active" Type="SByte" />
-          <NavigationProperty Name="rooms" Relationship="meetingModel.fk_building" FromRole="buildings" ToRole="rooms" />
-          <NavigationProperty Name="country" Relationship="meetingModel.fk_country" FromRole="buildings" ToRole="countries" />
+          <Property Type="Int32" Name="building_id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="country_id" Nullable="false" />
+          <Property Type="String" Name="building_name" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="bulding_address" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="modified_by" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="created_date" />
+          <Property Type="DateTime" Name="modified_date" />
+          <Property Type="SByte" Name="is_active" />
+          <NavigationProperty Name="rooms" Relationship="meetingModel.fk_building" FromRole="building" ToRole="room" />
+          <NavigationProperty Name="country" Relationship="meetingModel.fk_country" FromRole="building" ToRole="country" />
         </EntityType>
         <EntityType Name="country">
           <Key>
             <PropertyRef Name="country_id" />
           </Key>
-          <Property Name="country_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="country_name" Type="String" />
-          <Property Name="created_date" Type="DateTime" />
-          <Property Name="modified_date" Type="DateTime" />
-          <Property Name="modified_by" Type="String" />
-          <Property Name="is_active" Type="SByte" />
-          <NavigationProperty Name="buildings" Relationship="meetingModel.fk_country" FromRole="countries" ToRole="buildings" />
+          <Property Type="Int32" Name="country_id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="country_name" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="created_date" />
+          <Property Type="DateTime" Name="modified_date" />
+          <Property Type="String" Name="modified_by" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="SByte" Name="is_active" />
+          <NavigationProperty Name="buildings" Relationship="meetingModel.fk_country" FromRole="country" ToRole="building" />
         </EntityType>
         <EntityType Name="device">
           <Key>
             <PropertyRef Name="device_id" />
           </Key>
-          <Property Name="device_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="room_id" Type="Int32" Nullable="false" />
-          <Property Name="device_name" Type="String" />
-          <Property Name="device_serial_number" Type="String" />
-          <Property Name="modified_by" Type="String" />
-          <Property Name="created_date" Type="DateTime" />
-          <Property Name="modified_date" Type="DateTime" />
-          <Property Name="is_valid" Type="SByte" />
-          <NavigationProperty Name="room" Relationship="meetingModel.fk_room" FromRole="devices" ToRole="rooms" />
+          <Property Type="Int32" Name="device_id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="room_id" Nullable="false" />
+          <Property Type="String" Name="device_name" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="device_serial_number" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="modified_by" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="created_date" />
+          <Property Type="DateTime" Name="modified_date" />
+          <Property Type="SByte" Name="is_valid" />
+          <NavigationProperty Name="room" Relationship="meetingModel.fk_room" FromRole="device" ToRole="room" />
         </EntityType>
         <EntityType Name="reservation">
           <Key>
             <PropertyRef Name="reservation_id" />
           </Key>
-          <Property Name="reservation_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="room_id" Type="Int32" Nullable="false" />
-          <Property Name="user_name" Type="String" />
-          <Property Name="start_time" Type="DateTime" />
-          <Property Name="end_time" Type="DateTime" />
-          <Property Name="created_date" Type="DateTime" />
-          <NavigationProperty Name="room" Relationship="meetingModel.fk_room_id" FromRole="reservations" ToRole="rooms" />
+          <Property Type="Int32" Name="reservation_id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="room_id" Nullable="false" />
+          <Property Type="String" Name="user_name" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="start_time" />
+          <Property Type="DateTime" Name="end_time" />
+          <Property Type="DateTime" Name="created_date" />
+          <NavigationProperty Name="room" Relationship="meetingModel.fk_rooms" FromRole="reservation" ToRole="room" />
         </EntityType>
         <EntityType Name="room">
           <Key>
             <PropertyRef Name="room_id" />
           </Key>
-          <Property Name="room_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="building_id" Type="Int32" Nullable="false" />
-          <Property Name="room_capacity" Type="Int32" />
-          <Property Name="room_name" Type="String" />
-          <Property Name="modified_by" Type="String" />
-          <Property Name="created_date" Type="DateTime" />
-          <Property Name="modified_date" Type="DateTime" />
-          <Property Name="is_active" Type="SByte" />
-          <NavigationProperty Name="building" Relationship="meetingModel.fk_building" FromRole="rooms" ToRole="buildings" />
-          <NavigationProperty Name="devices" Relationship="meetingModel.fk_room" FromRole="rooms" ToRole="devices" />
-          <NavigationProperty Name="reservations" Relationship="meetingModel.fk_room_id" FromRole="rooms" ToRole="reservations" />
+          <Property Type="Int32" Name="room_id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="building_id" Nullable="false" />
+          <Property Type="Int32" Name="room_capacity" />
+          <Property Type="String" Name="room_name" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="modified_by" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="created_date" />
+          <Property Type="DateTime" Name="modified_date" />
+          <Property Type="SByte" Name="is_active" />
+          <NavigationProperty Name="building" Relationship="meetingModel.fk_building" FromRole="room" ToRole="building" />
+          <NavigationProperty Name="devices" Relationship="meetingModel.fk_room" FromRole="room" ToRole="device" />
+          <NavigationProperty Name="reservations" Relationship="meetingModel.fk_rooms" FromRole="room" ToRole="reservation" />
         </EntityType>
         <Association Name="fk_building">
-          <End Role="buildings" Type="meetingModel.building" Multiplicity="1" />
-          <End Role="rooms" Type="meetingModel.room" Multiplicity="*" />
+          <End Type="meetingModel.building" Role="building" Multiplicity="1" />
+          <End Type="meetingModel.room" Role="room" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="buildings">
+            <Principal Role="building">
               <PropertyRef Name="building_id" />
             </Principal>
-            <Dependent Role="rooms">
+            <Dependent Role="room">
               <PropertyRef Name="building_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_country">
-          <End Role="countries" Type="meetingModel.country" Multiplicity="1" />
-          <End Role="buildings" Type="meetingModel.building" Multiplicity="*" />
+          <End Type="meetingModel.country" Role="country" Multiplicity="1" />
+          <End Type="meetingModel.building" Role="building" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="countries">
+            <Principal Role="country">
               <PropertyRef Name="country_id" />
             </Principal>
-            <Dependent Role="buildings">
+            <Dependent Role="building">
               <PropertyRef Name="country_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_room">
-          <End Role="rooms" Type="meetingModel.room" Multiplicity="1" />
-          <End Role="devices" Type="meetingModel.device" Multiplicity="*" />
+          <End Type="meetingModel.room" Role="room" Multiplicity="1" />
+          <End Type="meetingModel.device" Role="device" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="rooms">
+            <Principal Role="room">
               <PropertyRef Name="room_id" />
             </Principal>
-            <Dependent Role="devices">
+            <Dependent Role="device">
               <PropertyRef Name="room_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_room_id">
-          <End Role="rooms" Type="meetingModel.room" Multiplicity="1" />
-          <End Role="reservations" Type="meetingModel.reservation" Multiplicity="*" />
+        <Association Name="fk_rooms">
+          <End Type="meetingModel.room" Role="room" Multiplicity="1" />
+          <End Type="meetingModel.reservation" Role="reservation" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="rooms">
+            <Principal Role="room">
               <PropertyRef Name="room_id" />
             </Principal>
-            <Dependent Role="reservations">
+            <Dependent Role="reservation">
               <PropertyRef Name="room_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="meetingModelStoreContainer" CdmEntityContainer="MeetingEntities">
-          <EntitySetMapping Name="buildings"><EntityTypeMapping TypeName="meetingModel.building"><MappingFragment StoreEntitySet="buildings">
-            <ScalarProperty Name="building_id" ColumnName="building_id" />
-            <ScalarProperty Name="country_id" ColumnName="country_id" />
-            <ScalarProperty Name="building_name" ColumnName="building_name" />
-            <ScalarProperty Name="bulding_address" ColumnName="bulding_address" />
-            <ScalarProperty Name="modified_by" ColumnName="modified_by" />
-            <ScalarProperty Name="created_date" ColumnName="created_date" />
-            <ScalarProperty Name="modified_date" ColumnName="modified_date" />
-            <ScalarProperty Name="is_active" ColumnName="is_active" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="countries"><EntityTypeMapping TypeName="meetingModel.country"><MappingFragment StoreEntitySet="countries">
-            <ScalarProperty Name="country_id" ColumnName="country_id" />
-            <ScalarProperty Name="country_name" ColumnName="country_name" />
-            <ScalarProperty Name="created_date" ColumnName="created_date" />
-            <ScalarProperty Name="modified_date" ColumnName="modified_date" />
-            <ScalarProperty Name="modified_by" ColumnName="modified_by" />
-            <ScalarProperty Name="is_active" ColumnName="is_active" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="devices"><EntityTypeMapping TypeName="meetingModel.device"><MappingFragment StoreEntitySet="devices">
-            <ScalarProperty Name="device_id" ColumnName="device_id" />
-            <ScalarProperty Name="room_id" ColumnName="room_id" />
-            <ScalarProperty Name="device_name" ColumnName="device_name" />
-            <ScalarProperty Name="device_serial_number" ColumnName="device_serial_number" />
-            <ScalarProperty Name="modified_by" ColumnName="modified_by" />
-            <ScalarProperty Name="created_date" ColumnName="created_date" />
-            <ScalarProperty Name="modified_date" ColumnName="modified_date" />
-            <ScalarProperty Name="is_valid" ColumnName="is_valid" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="reservations"><EntityTypeMapping TypeName="meetingModel.reservation"><MappingFragment StoreEntitySet="reservations">
-            <ScalarProperty Name="reservation_id" ColumnName="reservation_id" />
-            <ScalarProperty Name="room_id" ColumnName="room_id" />
-            <ScalarProperty Name="user_name" ColumnName="user_name" />
-            <ScalarProperty Name="start_time" ColumnName="start_time" />
-            <ScalarProperty Name="end_time" ColumnName="end_time" />
-            <ScalarProperty Name="created_date" ColumnName="created_date" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="rooms"><EntityTypeMapping TypeName="meetingModel.room"><MappingFragment StoreEntitySet="rooms">
-            <ScalarProperty Name="room_id" ColumnName="room_id" />
-            <ScalarProperty Name="building_id" ColumnName="building_id" />
-            <ScalarProperty Name="room_capacity" ColumnName="room_capacity" />
-            <ScalarProperty Name="room_name" ColumnName="room_name" />
-            <ScalarProperty Name="modified_by" ColumnName="modified_by" />
-            <ScalarProperty Name="created_date" ColumnName="created_date" />
-            <ScalarProperty Name="modified_date" ColumnName="modified_date" />
-            <ScalarProperty Name="is_active" ColumnName="is_active" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="buildings">
+            <EntityTypeMapping TypeName="meetingModel.building">
+              <MappingFragment StoreEntitySet="buildings">
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="bulding_address" ColumnName="bulding_address" />
+                <ScalarProperty Name="building_name" ColumnName="building_name" />
+                <ScalarProperty Name="country_id" ColumnName="country_id" />
+                <ScalarProperty Name="building_id" ColumnName="building_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="countries">
+            <EntityTypeMapping TypeName="meetingModel.country">
+              <MappingFragment StoreEntitySet="countries">
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="country_name" ColumnName="country_name" />
+                <ScalarProperty Name="country_id" ColumnName="country_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="devices">
+            <EntityTypeMapping TypeName="meetingModel.device">
+              <MappingFragment StoreEntitySet="devices">
+                <ScalarProperty Name="is_valid" ColumnName="is_valid" />
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="device_serial_number" ColumnName="device_serial_number" />
+                <ScalarProperty Name="device_name" ColumnName="device_name" />
+                <ScalarProperty Name="room_id" ColumnName="room_id" />
+                <ScalarProperty Name="device_id" ColumnName="device_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="reservations">
+            <EntityTypeMapping TypeName="meetingModel.reservation">
+              <MappingFragment StoreEntitySet="reservations">
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="end_time" ColumnName="end_time" />
+                <ScalarProperty Name="start_time" ColumnName="start_time" />
+                <ScalarProperty Name="user_name" ColumnName="user_name" />
+                <ScalarProperty Name="room_id" ColumnName="room_id" />
+                <ScalarProperty Name="reservation_id" ColumnName="reservation_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rooms">
+            <EntityTypeMapping TypeName="meetingModel.room">
+              <MappingFragment StoreEntitySet="rooms">
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="room_name" ColumnName="room_name" />
+                <ScalarProperty Name="room_capacity" ColumnName="room_capacity" />
+                <ScalarProperty Name="building_id" ColumnName="building_id" />
+                <ScalarProperty Name="room_id" ColumnName="room_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -355,26 +374,27 @@
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram Name="SRS_Model">
-        <EntityTypeShape EntityType="meetingModel.building" Width="1.5" PointX="3" PointY="2.625" Height="2.9417936197916656" IsExpanded="true" />
-        <EntityTypeShape EntityType="meetingModel.country" Width="1.5" PointX="0.75" PointY="2.875" Height="2.3648893229166674" IsExpanded="true" />
-        <EntityTypeShape EntityType="meetingModel.device" Width="1.5" PointX="7.5" PointY="1.125" Height="2.7494921874999996" IsExpanded="true" />
-        <EntityTypeShape EntityType="meetingModel.reservation" Width="1.5" PointX="7.5" PointY="4.625" Height="2.3648893229166656" IsExpanded="true" />
-        <EntityTypeShape EntityType="meetingModel.room" Width="1.5" PointX="5.25" PointY="2.5" Height="3.1340950520833335" IsExpanded="true" />
-        <AssociationConnector Association="meetingModel.fk_building" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.5" PointY="4.0958968098958328" />
-          <ConnectorPoint PointX="5.25" PointY="4.0958968098958328" />
+        <EntityTypeShape EntityType="meetingModel.building" Width="1.5" PointX="3" PointY="1" Height="2.9417936197916674" />
+        <EntityTypeShape EntityType="meetingModel.country" Width="1.5" PointX="0.75" PointY="1.25" Height="2.3648893229166745" />
+        <EntityTypeShape EntityType="meetingModel.device" Width="1.5" PointX="7.5" PointY="1.125" Height="2.7494921875000031" />
+        <EntityTypeShape EntityType="meetingModel.reservation" Width="1.5" PointX="8" PointY="4.375" Height="2.3648893229166665" />
+        <EntityTypeShape EntityType="meetingModel.room" Width="1.5" PointX="5.25" PointY="1" Height="2.9417936197916674" />
+        <AssociationConnector Association="meetingModel.fk_building" >
+          <ConnectorPoint PointX="4.5" PointY="2.4708968098958337" />
+          <ConnectorPoint PointX="5.25" PointY="2.4708968098958337" />
         </AssociationConnector>
-        <AssociationConnector Association="meetingModel.fk_country" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="4.0574446614583337" />
-          <ConnectorPoint PointX="3" PointY="4.0574446614583337" />
+        <AssociationConnector Association="meetingModel.fk_country" >
+          <ConnectorPoint PointX="2.25" PointY="2.4324446614583373" />
+          <ConnectorPoint PointX="3" PointY="2.4324446614583373" />
         </AssociationConnector>
-        <AssociationConnector Association="meetingModel.fk_room" ManuallyRouted="false">
-          <ConnectorPoint PointX="6.75" PointY="3.18724609375" />
-          <ConnectorPoint PointX="7.5" PointY="3.18724609375" />
+        <AssociationConnector Association="meetingModel.fk_room" >
+          <ConnectorPoint PointX="6.75" PointY="2.4997460937500016" />
+          <ConnectorPoint PointX="7.5" PointY="2.4997460937500016" />
         </AssociationConnector>
-        <AssociationConnector Association="meetingModel.fk_room_id" ManuallyRouted="false">
-          <ConnectorPoint PointX="6.75" PointY="5.1295475260416667" />
-          <ConnectorPoint PointX="7.5" PointY="5.1295475260416667" />
+        <AssociationConnector Association="meetingModel.fk_rooms" >
+          <ConnectorPoint PointX="6.75" PointY="4.0355436197916674" />
+          <ConnectorPoint PointX="9.28125" PointY="4.0355436197916674" />
+          <ConnectorPoint PointX="9.28125" PointY="4.375" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>

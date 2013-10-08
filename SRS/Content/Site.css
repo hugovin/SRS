@@ -1762,7 +1762,6 @@ sup {
 .home .sub {
     position: relative;
     z-index: 2;
-    margin-top: 400px;
 }
 .single .sub {
     background: white;

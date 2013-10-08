@@ -17,7 +17,46 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<div id='calendar'></div>
+<h1>My Reservations</h1>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            
+            <div class="span12">
+                <div class="row span12">
+                    <h2>
+                        Filters</h2>
+                    <div class="span12">
+                        <select class="span3">
+                            <option>Country Name</option>
+                            <option>Costa Rica</option>
+                        </select>
+                        <select class="span3">
+                            <option>Building Name</option>
+                            <option>Neu1</option>
+                        </select>
+                        <input type="text" class="span2" id="txtRoomName" placeholder="Capacity" />
+                        <select class="span3">
+                            <option>Available Room</option>
+                            <option>Room1</option>
+                            <option>Room2</option>
+                            <option>Room3</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row span12"></div>
+                <hr />
+                <div class="row span12">                
+                    <div id='calendar'></div>
+
+                  
+                </div>
+            </div>
+            <div class="row span10">
+            </div>
+        </div>
+    </div>
+
+
 </asp:Content>
 
 <asp:Content ID="Js" ContentPlaceHolderID="CustomJs" runat="server">

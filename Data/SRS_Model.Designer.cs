@@ -18,10 +18,10 @@ using System.Runtime.Serialization;
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
 
-[assembly: EdmRelationshipAttribute("meetingModel", "fk_building", "buildings", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Data.building), "rooms", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Data.room), true)]
-[assembly: EdmRelationshipAttribute("meetingModel", "fk_country", "countries", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Data.country), "buildings", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Data.building), true)]
-[assembly: EdmRelationshipAttribute("meetingModel", "fk_room", "rooms", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Data.room), "devices", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Data.device), true)]
-[assembly: EdmRelationshipAttribute("meetingModel", "fk_room_id", "rooms", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Data.room), "reservations", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Data.reservation), true)]
+[assembly: EdmRelationshipAttribute("meetingModel", "fk_building", "building", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Data.building), "room", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Data.room), true)]
+[assembly: EdmRelationshipAttribute("meetingModel", "fk_country", "country", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Data.country), "building", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Data.building), true)]
+[assembly: EdmRelationshipAttribute("meetingModel", "fk_room", "room", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Data.room), "device", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Data.device), true)]
+[assembly: EdmRelationshipAttribute("meetingModel", "fk_rooms", "room", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Data.room), "reservation", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Data.reservation), true)]
 
 #endregion
 
@@ -435,18 +435,18 @@ namespace Data
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("meetingModel", "fk_building", "rooms")]
+        [EdmRelationshipNavigationPropertyAttribute("meetingModel", "fk_building", "room")]
         public EntityCollection<room> rooms
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<room>("meetingModel.fk_building", "rooms");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<room>("meetingModel.fk_building", "room");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<room>("meetingModel.fk_building", "rooms", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<room>("meetingModel.fk_building", "room", value);
                 }
             }
         }
@@ -457,16 +457,16 @@ namespace Data
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("meetingModel", "fk_country", "countries")]
+        [EdmRelationshipNavigationPropertyAttribute("meetingModel", "fk_country", "country")]
         public country country
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<country>("meetingModel.fk_country", "countries").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<country>("meetingModel.fk_country", "country").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<country>("meetingModel.fk_country", "countries").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<country>("meetingModel.fk_country", "country").Value = value;
             }
         }
         /// <summary>
@@ -478,13 +478,13 @@ namespace Data
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<country>("meetingModel.fk_country", "countries");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<country>("meetingModel.fk_country", "country");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<country>("meetingModel.fk_country", "countries", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<country>("meetingModel.fk_country", "country", value);
                 }
             }
         }
@@ -673,18 +673,18 @@ namespace Data
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("meetingModel", "fk_country", "buildings")]
+        [EdmRelationshipNavigationPropertyAttribute("meetingModel", "fk_country", "building")]
         public EntityCollection<building> buildings
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<building>("meetingModel.fk_country", "buildings");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<building>("meetingModel.fk_country", "building");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<building>("meetingModel.fk_country", "buildings", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<building>("meetingModel.fk_country", "building", value);
                 }
             }
         }
@@ -923,16 +923,16 @@ namespace Data
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("meetingModel", "fk_room", "rooms")]
+        [EdmRelationshipNavigationPropertyAttribute("meetingModel", "fk_room", "room")]
         public room room
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<room>("meetingModel.fk_room", "rooms").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<room>("meetingModel.fk_room", "room").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<room>("meetingModel.fk_room", "rooms").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<room>("meetingModel.fk_room", "room").Value = value;
             }
         }
         /// <summary>
@@ -944,13 +944,13 @@ namespace Data
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<room>("meetingModel.fk_room", "rooms");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<room>("meetingModel.fk_room", "room");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<room>("meetingModel.fk_room", "rooms", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<room>("meetingModel.fk_room", "room", value);
                 }
             }
         }
@@ -1141,16 +1141,16 @@ namespace Data
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("meetingModel", "fk_room_id", "rooms")]
+        [EdmRelationshipNavigationPropertyAttribute("meetingModel", "fk_rooms", "room")]
         public room room
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<room>("meetingModel.fk_room_id", "rooms").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<room>("meetingModel.fk_rooms", "room").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<room>("meetingModel.fk_room_id", "rooms").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<room>("meetingModel.fk_rooms", "room").Value = value;
             }
         }
         /// <summary>
@@ -1162,13 +1162,13 @@ namespace Data
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<room>("meetingModel.fk_room_id", "rooms");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<room>("meetingModel.fk_rooms", "room");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<room>("meetingModel.fk_room_id", "rooms", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<room>("meetingModel.fk_rooms", "room", value);
                 }
             }
         }
@@ -1407,16 +1407,16 @@ namespace Data
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("meetingModel", "fk_building", "buildings")]
+        [EdmRelationshipNavigationPropertyAttribute("meetingModel", "fk_building", "building")]
         public building building
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<building>("meetingModel.fk_building", "buildings").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<building>("meetingModel.fk_building", "building").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<building>("meetingModel.fk_building", "buildings").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<building>("meetingModel.fk_building", "building").Value = value;
             }
         }
         /// <summary>
@@ -1428,13 +1428,13 @@ namespace Data
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<building>("meetingModel.fk_building", "buildings");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<building>("meetingModel.fk_building", "building");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<building>("meetingModel.fk_building", "buildings", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<building>("meetingModel.fk_building", "building", value);
                 }
             }
         }
@@ -1445,18 +1445,18 @@ namespace Data
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("meetingModel", "fk_room", "devices")]
+        [EdmRelationshipNavigationPropertyAttribute("meetingModel", "fk_room", "device")]
         public EntityCollection<device> devices
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<device>("meetingModel.fk_room", "devices");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<device>("meetingModel.fk_room", "device");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<device>("meetingModel.fk_room", "devices", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<device>("meetingModel.fk_room", "device", value);
                 }
             }
         }
@@ -1467,18 +1467,18 @@ namespace Data
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("meetingModel", "fk_room_id", "reservations")]
+        [EdmRelationshipNavigationPropertyAttribute("meetingModel", "fk_rooms", "reservation")]
         public EntityCollection<reservation> reservations
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<reservation>("meetingModel.fk_room_id", "reservations");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<reservation>("meetingModel.fk_rooms", "reservation");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<reservation>("meetingModel.fk_room_id", "reservations", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<reservation>("meetingModel.fk_rooms", "reservation", value);
                 }
             }
         }

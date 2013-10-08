@@ -63,6 +63,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CMS\BuildingsController.cs" />
+    <Compile Include="Controllers\CMS\CMSController.cs" />
+    <Compile Include="Controllers\CMS\DevicesController.cs" />
+    <Compile Include="Controllers\CMS\RoomsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -71,6 +75,29 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\css\bootstrap.css" />
+    <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\fullcalendar\fullcalendar.css" />
+    <Content Include="Content\fullcalendar\fullcalendar.js" />
+    <Content Include="Content\fullcalendar\fullcalendar.min.js" />
+    <Content Include="Content\fullcalendar\fullcalendar.print.css" />
+    <Content Include="Content\fullcalendar\gcal.js" />
+    <Content Include="Content\img\glyphicons-halflings-white.png" />
+    <Content Include="Content\img\glyphicons-halflings.png" />
+    <Content Include="Content\js\bootstrap-button.js" />
+    <Content Include="Content\js\bootstrap-dropdown.js" />
+    <Content Include="Content\js\bootstrap-modal.js" />
+    <Content Include="Content\js\bootstrap.js" />
+    <Content Include="Content\js\bootstrap.min.js" />
+    <Content Include="Content\js\jquery-1.10.2.min.js" />
+    <Content Include="Content\lib\jquery-ui.custom.min.js" />
+    <Content Include="Content\lib\jquery.min.js" />
+    <Content Include="Content\mobile.css" />
+    <Content Include="Content\styles.css" />
+    <Content Include="Content\themes\base\images\corporate_sprite.png" />
+    <Content Include="Content\themes\base\images\neustar.png" />
+    <Content Include="Content\themes\base\images\neustar.svg" />
+    <Content Include="Content\themes\base\images\overlay.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -109,6 +136,10 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\modernizr-1.7.js" />
     <Content Include="Scripts\modernizr-1.7.min.js" />
+    <Content Include="Views\Buildings\Index.aspx" />
+    <Content Include="Views\CMS\Index.aspx" />
+    <Content Include="Views\Devices\Index.aspx" />
+    <Content Include="Views\Rooms\Index.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
