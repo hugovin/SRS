@@ -26,6 +26,8 @@ namespace Core_Services
                 composite.StringValue += "Suffix";
             }
             return composite;
+            
+            
         }
     }
 }
